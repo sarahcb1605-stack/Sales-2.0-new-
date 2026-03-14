@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sarah Sales 2.0</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body { height: 100%; background: #0a0a0a; font-family: 'DM Sans', sans-serif; color: #fff; }
+    ::-webkit-scrollbar { width: 3px; }
+    ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 2px; }
+
+    #modal-overlay {
+      position: fixed; inset: 0; background: rgba(0,0,0,0.88);
+      display: none; align-items: center; justify-content: center;
+      z-index: 999; padding: 20px;
+    }
+    #modal-box {
+      background: #111; border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 16px; padding: 36px 32px; max-width: 420px; width: 100%;
+      text-align: center;
+    }
+    #modal-box h2 { font-family: 'Playfair Display', serif; font-size: 22px; margin: 12px 0 8px; }
+    #modal-box p  { color: rgba(255,255,255,0.4); font-size: 12.5px; line-height: 1.7; margin-bottom: 20px; }
+    #modal-box a  { color: rgba(167,139,250,0.8); }
+    #api-input {
+      width: 100%; background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.12); border-radius: 10px;
+      padding: 11px 14px; color: #fff; font-size: 13.5px; outline: none;
+      margin-bottom: 14px; font-family: monospace;
+    }
+    #api-save-btn {
+      width: 100%; background: rgba(167,139,250,0.85); border: none;
+      border-radius: 10px; padding: 11px; color: #fff; font-size: 14px;
+      font-weight: 500; cursor: pointer; font-family: 'DM Sans', sans-serif;
+    }
+    #api-save-btn:disabled { background: rgba(255,255,255,0.06); cursor: default; }
+
+    #home-screen { min-height: 100vh; display: block; }
+    .home-inner  { max-width: 640px; margin: 0 auto; padding: 50px 18px 40px; }
+    .badge {
+      display: inline-flex; align-items: center; gap: 7px;
+      background: rgba(34,197,94,0.08); border: 1px solid rgba(34,197,94,0.15);
+      border-radius: 20px; padding: 4px 12px; margin-bottom: 22px;
+    }
+    .dot { width: 6px; height: 6px; border-radius: 50%; background: #22c55e; box-shadow: 0 0 6px #22c55e; }
+    .badge span { font-size: 11px; color: rgba(255,255,255,0.35); letter-spacing: 2px; text-transform: uppercase; }
+    h1.title { font-family: 'Playfair Display', serif; font-size: 52px; font-weight: 900; line-height: 1.1; margin-bottom: 12px; }
+    h1.title em { color: rgba(167,139,250,0.8); font-style: normal; }
+    .subtitle { font-size: 13.5px; color: rgba(255,255,255,0.3); line-height: 1.7; max-width: 340px; margin: 0 auto 40px; }
+
+    .free-card {
+      cursor: pointer; background: rgba(167,139,250,0.05);
+      border: 1px solid rgba(167,139,250,0.15); border-radius: 14px;
+      padding: 14px 18px; margin-bottom: 20px;
+      display: flex; align-items: center; gap: 14px; transition: all 0.2s;
+    }
+    .free-card:hover { background: rgba(167,139,250,0.1); border-color: rgba(167,139,250,0.3); }
+    .free-icon {
+      width: 38px; height: 38px; border-radius: 50%; flex-shrink: 0;
+      background: rgba(167,139,250,0.1); border: 1px solid rgba(167,139,250,0.2);
+      display: flex; align-items: center; justify-content: center; font-size: 18px;
+    }
+    .free-label { font-size: 14px; font-weight: 500; margin-bottom: 2px; }
+    .free-desc  { font-size: 12px; color: rgba(255,255,255,0.3); }
+    .free-arrow { color: rgba(167,139,250,0.4); font-size: 20px; margin-left: auto; }
+
+    .divider { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; }
+    .divider-line { flex: 1; height: 1px; background: rgba(255,255,255,0.06); }
+    .divider-text { font-size: 10.5px; color: rgba(255,255,255,0.18); letter-spacing: 2px; text-transform: uppercase; }
+
+    .mode-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 9px; margin-bottom: 30px; }
+    .mode-card {
+      cursor: pointer; background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.08); border-radius: 12px;
+      padding: 16px 16px 14px; transition: all 0.2s;
+    }
+    .mode-card:hover { border-color: rgba(255,255,255,0.22); background: rgba(255,255,255,0.06); }
+    .mode-icon  { font-size: 19px; margin-bottom: 7px; }
+    .mode-label { font-size: 13.5px; font-weight: 500; margin-bottom: 3px; }
+    .mode-desc  { font-size: 11.5px; color: rgba(255,255,255,0.28); line-height: 1.5; }
+
+    .footer { text-align: center; border-top: 1px solid rgba(255,255,255,0.05); padding-top: 20px; }
+    .footer p { font-size: 10.5px; color: rgba(255,255,255,0.13); letter-spacing: 1px; text-transform: uppercase; margin-bottom: 8px; }
+    .edit-key-btn { background: none; border: none; color: rgba(255,255,255,0.2); font-size: 11px; cursor: pointer; text-decoration: underline; font-family: 'DM Sans', sans-serif; }
+
+    #chat-screen { height: 100vh; display: none; flex-direction: column; }
+    .chat-header {
+      padding: 11px 16px; border-bottom: 1px solid rgba(255,255,255,0.07);
+      display: flex; align-items: center; gap: 10px; flex-shrink: 0;
+    }
+    .back-btn { background: none; border: none; color: rgba(255,255,255,0.35); cursor: pointer; font-size: 20px; padding: 2px 6px; border-radius: 6px; }
+    .mode-title { font-size: 13px; font-weight: 500; color: rgba(255,255,255,0.55); }
+    .reset-btn  { background: none; border: none; color: rgba(255,255,255,0.25); cursor: pointer; font-size: 11px; letter-spacing: 0.5px; font-family: 'DM Sans', sans-serif; }
+
+    #messages { flex: 1; overflow-y: auto; padding: 20px 14px; }
+    .messages-inner { max-width: 660px; margin: 0 auto; }
+
+    .msg-row { display: flex; margin-bottom: 14px; gap: 10px; animation: fadeUp 0.22s ease; }
+    .msg-row.user { justify-content: flex-end; }
+    .msg-row.bot  { justify-content: flex-start; }
+
+    .avatar {
+      width: 30px; height: 30px; border-radius: 50%; flex-shrink: 0; margin-top: 2px;
+      background: rgba(167,139,250,0.12); border: 1px solid rgba(167,139,250,0.2);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 12px; font-weight: 600; color: rgba(167,139,250,0.9);
+    }
+    .bubble-wrap      { max-width: 85%; }
+    .bubble-wrap.user { max-width: 78%; }
+    .bubble { padding: 10px 16px; font-size: 13.5px; line-height: 1.7; }
+    .bubble.bot  {
+      background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 4px 16px 16px 16px; color: rgba(255,255,255,0.85);
+    }
+    .bubble.user {
+      background: rgba(255,255,255,0.09); border: 1px solid rgba(255,255,255,0.14);
+      border-radius: 16px 4px 16px 16px; color: #fff; white-space: pre-wrap;
+    }
+    .bubble.bot strong { color: #fff; font-weight: 600; }
+    .bubble.bot em     { color: rgba(251,191,36,0.9); font-style: italic; }
+    .bubble.bot code   { background: rgba(255,255,255,0.08); padding: 1px 5px; border-radius: 3px; font-size: 12px; }
+    .md-h1 { font-size: 17px; font-weight: 700; color: #fff; margin: 12px 0 6px; }
+    .md-h2 { font-size: 15px; font-weight: 600; color: #fff; margin: 10px 0 4px; }
+    .md-h3 { font-size: 11.5px; font-weight: 600; color: rgba(167,139,250,0.7); text-transform: uppercase; letter-spacing: 1px; margin: 10px 0 4px; }
+    .md-bq { border-left: 2px solid rgba(167,139,250,0.4); padding-left: 10px; margin: 4px 0; color: rgba(255,255,255,0.6); font-style: italic; font-size: 13px; }
+    .md-li { display: flex; gap: 8px; margin: 3px 0; align-items: flex-start; }
+    .md-li .bullet { color: rgba(167,139,250,0.5); flex-shrink: 0; margin-top: 2px; }
+    .md-li .li-text { color: rgba(255,255,255,0.82); font-size: 13.5px; line-height: 1.6; }
+    .md-ol { display: flex; gap: 8px; margin: 3px 0; }
+    .md-ol .ol-num { color: rgba(167,139,250,0.5); min-width: 16px; font-size: 12px; flex-shrink: 0; }
+    .md-hr { border: none; border-top: 1px solid rgba(255,255,255,0.07); margin: 10px 0; }
+    .md-br { height: 5px; }
+
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+    @keyframes pulse  { 0%,100% { opacity: 0.3; transform: scale(0.8); } 50% { opacity: 1; transform: scale(1); } }
+
+    .typing-dots { display: flex; gap: 5px; align-items: center; padding: 12px 16px; }
+    .dot-pulse { width: 6px; height: 6px; border-radius: 50%; background: rgba(167,139,250,0.5); }
+    .dot-pulse:nth-child(1) { animation: pulse 1.2s ease-in-out 0s infinite; }
+    .dot-pulse:nth-child(2) { animation: pulse 1.2s ease-in-out 0.2s infinite; }
+    .dot-pulse:nth-child(3) { animation: pulse 1.2s ease-in-out 0.4s infinite; }
+
+    #pending-bar { padding: 0 14px 6px; display: none; }
+    .pending-inner {
+      max-width: 660px; margin: 0 auto;
+      background: rgba(167,139,250,0.07); border: 1px solid rgba(167,139,250,0.15);
+      border-radius: 8px; padding: 7px 12px; display: flex; align-items: center; gap: 8px;
+    }
+    .pending-name { flex: 1; font-size: 12px; color: rgba(255,255,255,0.55); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .remove-file  { background: none; border: none; color: rgba(255,255,255,0.3); cursor: pointer; font-size: 18px; }
+
+    #input-area { padding: 8px 14px 16px; border-top: 1px solid rgba(255,255,255,0.07); flex-shrink: 0; }
+    .input-inner { max-width: 660px; margin: 0 auto; }
+    .input-box {
+      background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 14px; overflow: hidden; transition: border-color 0.2s;
+    }
+    .input-box.recording { border-color: rgba(239,68,68,0.4); }
+    #msg-input {
+      width: 100%; background: none; border: none; outline: none; resize: none;
+      color: #fff; font-size: 13.5px; padding: 12px 14px 6px; line-height: 1.6;
+      font-family: 'DM Sans', sans-serif; max-height: 120px; overflow-y: auto; display: block;
+    }
+    .input-actions { display: flex; align-items: center; padding: 5px 10px; gap: 4px; }
+    .icon-btn {
+      background: none; border: 1px solid transparent; cursor: pointer;
+      color: rgba(255,255,255,0.25); font-size: 16px; padding: 3px 7px;
+      border-radius: 6px; transition: all 0.2s;
+    }
+    .icon-btn:hover { color: rgba(255,255,255,0.6); }
+    .icon-btn.rec-active { background: rgba(239,68,68,0.12); border-color: rgba(239,68,68,0.3); color: #ef4444; }
+    .spacer { flex: 1; }
+    #send-btn {
+      background: rgba(167,139,250,0.85); border: none; cursor: pointer;
+      color: #fff; font-size: 13px; font-weight: 500; padding: 6px 16px;
+      border-radius: 8px; transition: all 0.2s; font-family: 'DM Sans', sans-serif;
+    }
+    #send-btn:disabled { background: rgba(255,255,255,0.06); cursor: default; }
+    .input-footer { text-align: center; font-size: 11px; color: rgba(255,255,255,0.12); margin-top: 8px; }
+    .error-bar { text-align: center; color: #f87171; font-size: 12px; padding: 8px 16px; background: rgba(239,68,68,0.06); border-radius: 8px; margin-bottom: 10px; }
+  </style>
+</head>
+<body>
+
+<!-- MODAL -->
+<div id="modal-overlay">
+  <div id="modal-box">
+    <div style="font-size:28px;">🔑</div>
+    <h2>Clé API Anthropic</h2>
+    <p>Ta clé est sauvegardée uniquement dans ton navigateur.<br>
+       Obtiens-la sur <a href="https://console.anthropic.com" target="_blank">console.anthropic.com</a></p>
+    <input id="api-input" type="password" placeholder="sk-ant-..." />
+    <button id="api-save-btn" disabled>Enregistrer et lancer</button>
+  </div>
+</div>
+
+<!-- HOME -->
+<div id="home-screen">
+  <div class="home-inner">
+    <div style="text-align:center;">
+      <div class="badge"><div class="dot"></div><span>Online</span></div>
+      <h1 class="title">Sarah Sales<br><em>2.0</em></h1>
+      <p class="subtitle">Coach commercial exigeant. Méthode Shanne Melendez.<br>Disqualifie, ne convainc pas.</p>
+    </div>
+    <div class="free-card" id="free-card">
+      <div class="free-icon">💬</div>
+      <div style="flex:1;">
+        <div class="free-label">Chat libre</div>
+        <div class="free-desc">Pose n'importe quelle question commerciale</div>
+      </div>
+      <div class="free-arrow">→</div>
+    </div>
+    <div class="divider">
+      <div class="divider-line"></div>
+      <span class="divider-text">Modes</span>
+      <div class="divider-line"></div>
+    </div>
+    <div class="mode-grid" id="mode-grid"></div>
+    <div class="footer">
+      <p>Sarah Sales 2.0 · Méthode Shanne Melendez</p>
+      <button class="edit-key-btn" id="edit-key-btn">Changer la clé API</button>
+    </div>
+  </div>
+</div>
+
+<!-- CHAT -->
+<div id="chat-screen">
+  <div class="chat-header">
+    <button class="back-btn" id="back-btn">←</button>
+    <div style="flex:1;"></div>
+    <span id="chat-mode-icon"></span>&nbsp;
+    <span class="mode-title" id="chat-mode-label"></span>
+    <div style="flex:1;"></div>
+    <button class="reset-btn" id="reset-btn">Reset</button>
+  </div>
+  <div id="messages"><div class="messages-inner" id="messages-inner"></div></div>
+  <div id="pending-bar">
+    <div class="pending-inner">
+      <span id="pending-icon"></span>
+      <span class="pending-name" id="pending-name"></span>
+      <button class="remove-file" id="remove-file">×</button>
+    </div>
+  </div>
+  <div id="input-area">
+    <div class="input-inner">
+      <div class="input-box" id="input-box">
+        <textarea id="msg-input" rows="1" placeholder="Écris ou dicte ton message..."></textarea>
+        <div class="input-actions">
+          <input type="file" id="file-input" accept=".txt,.png,.jpg,.jpeg,.webp" style="display:none;" />
+          <button class="icon-btn" id="attach-btn" title="Joindre">📎</button>
+          <button class="icon-btn" id="mic-btn" title="Dicter">🎙️</button>
+          <div class="spacer"></div>
+          <button id="send-btn" disabled>Envoyer</button>
+        </div>
+      </div>
+      <p class="input-footer">Sarah Sales 2.0 · Méthode Shanne Melendez</p>
+    </div>
+  </div>
+</div>
+
+<script>
+const SYSTEM_PROMPT = `Tu es SARAH SALES 2.0, coach commercial ultra-exigeant. Méthode Shanne Melendez adaptée.
+
+RÈGLES DE RÉPONSE : Sois concise et directe. Max 150 mots par réponse sauf si l'utilisateur demande explicitement plus. Pas de blabla. Pas de validation systématique. Va droit au but.
+
+IDENTITÉ : Experte en aide à la décision. Disqualifie, ne convaincs pas. 30% parle, 70% écoute et questionne.
+
+LANGAGE INTERDIT : "J'espère que ça vous conviendra" / "Désolée de vous déranger" / "Ça pourrait peut-être" / "Je me permets"
+
+MÉTHODE CIRQUE :
+C=CREUSER : "Qu'est-ce qui vous fait dire ça ?" + silence
+I=ISOLER : "Si on met ça de côté, qu'est-ce qui pourrait nous empêcher de collaborer ?" + silence
+R=RÉPONDRE : preuve sociale / recadrage "Et si dans 6 mois rien ne changeait ?" / ROI chiffré
+Q=QUESTIONNER : interquestion pour approfondir
+U=UTILISER : retourner l'objection
+E=CONTRÔLER : "Est-ce que ça a répondu à votre question ?" + verrouiller
+
+OBJECTIONS :
+"Trop cher" → "Vous comparez à quoi ?" → "On parle d'un manque d'argent ou d'un manque de priorité ?"
+"J'y réfléchis" → "C'est une vraie réflexion ou une façon polie de me dire non ?" → caler prochaine étape
+"Mon associé" → "S'il n'y avait pas votre associé, vous décideriez aujourd'hui ?" → "Qu'est-ce qu'il vous faut pour le convaincre ?"
+"Pas le temps" → "Vous avez déjà eu un moment parfait pour démarrer quelque chose ?"
+
+COLD CALL : Accroche personnalisée → cadrage → CQQCOQP → écoute → RDV.
+Passage RDV : "Deux possibilités. Soit on continue — mais vous m'avez dit peu de temps. Soit on cale 20 minutes pour aller au fond. Qu'est-ce qui vous convient ?"
+
+RELANCES : 1.Breakup email 2.LinkedIn subtil 3.Valeur sectorielle 4.Introduction-réciprocité 5.Défi direct
+
+CLOSING : Closing = conséquence d'une bonne découverte. Rétro planning : "Quand voulez-vous que ça soit en place ?" → remonter les étapes.
+Cadrage RDV : "J'ai prévu 25 min. D'abord vos enjeux, ensuite ce qu'on fait en lien, et si ça matche, on parle de la suite. Ça vous va ?"
+
+FRAMEWORK P/P/F : Présent → Passé → Futur → interquestion "Comment ?" si blocage.
+
+QUESTIONS CLÉ : "Qu'est-ce qui vous fait dire ça ?" / "Si on met ça de côté..." / "C'est quoi le vrai frein ?" / "Qu'est-ce qui changerait si..."
+
+FBI NÉGOCIATION :
+1.MIRRORING : répéter 2-3 derniers mots + interrogatif + silence
+2.CALIBRÉES : "pourquoi" → "comment/en quoi". "Comment rendre cette proposition acceptable ?"
+3.ÉTIQUETAGE : "Il me semble que..." / "J'ai l'impression que..." — jamais "vous êtes"
+4.NON STRATÉGIQUE : "Seriez-vous opposé à explorer d'autres options ?"
+5.C'EST EXACT : reformuler sa position avec ses mots → viser "c'est exact" pas "vous avez raison"
+6.SIGNE NOIR : info cachée qui change tout — écoute active + silence
+7.SILENCE CALCULÉ : compter jusqu'à 5 après chaque question
+
+ROLEPLAY : prospect résistant réaliste, ne cède pas sans vrai creusage
+DÉBRIEF : erreurs posture/questions/silences. UNE chose concrète à la fin.
+PREP RDV : objectif sortie / cadrage / objections probables / 5 questions P/P/F / rétro planning
+QUESTION MÉTHODE : réponse courte, formulation exacte
+OBJECTIONS & NÉGO : CIRQUE ou FBI, script mot pour mot
+CONDUITE RDV : cadrage / découverte / objections / closing`;
+
+const MODES = [
+  { id:"roleplay",   icon:"🎭", label:"Roleplay",         desc:"S'entraîner face à un prospect" },
+  { id:"debrief",    icon:"🔍", label:"Débrief de call",  desc:"Analyser ce qui s'est passé" },
+  { id:"prep",       icon:"🎯", label:"Préparer un RDV",  desc:"Stratégie avant un rendez-vous" },
+  { id:"methode",    icon:"📋", label:"Question méthode", desc:"Coach à la demande" },
+  { id:"objections", icon:"⚡", label:"Objections & Négo",desc:"Scripts mot pour mot" },
+  { id:"rdv",        icon:"🗓️", label:"Conduite de RDV",  desc:"Cadrage, découverte, closing" },
+];
+
+const MODE_PROMPTS = {
+  roleplay:   "**MODE ROLEPLAY activé** 🎭\n\nDonne-moi le contexte :\n- Ton secteur d'activité\n- Le profil du prospect (poste, taille boîte)\n- Où tu en es (premier call ? relance ? RDV chaud ?)\n- Ce que tu vends en une phrase\n\nJe joue le prospect. Je ne cède pas facilement.",
+  debrief:    "**MODE DÉBRIEF activé** 🔍\n\nRaconte-moi ce qui s'est passé : l'appel, le RDV, ce qui a bloqué. Sois précise — les mots exacts si tu t'en souviens.\n\nJe t'identifie les 2-3 erreurs clés et te donne UNE chose à corriger en priorité.",
+  prep:       "**MODE PRÉPARATION RDV activé** 🎯\n\nDonne-moi le contexte :\n- Qui tu vas voir et son contexte\n- Ce que tu vends\n- Objectif du RDV\n- Ce que tu sais déjà sur leurs enjeux\n\nJe te construis le plan de bataille.",
+  methode:    "**MODE QUESTION MÉTHODE activé** 📋\n\nQuelle est ta question ? Objections, prospection, structure de RDV, formulation exacte...\n\nRéponse directe, script si besoin.",
+  objections: "**MODE OBJECTIONS & NÉGOCIATION activé** ⚡\n\nQuelle objection ou situation de blocage tu rencontres ? Donne-moi le contexte exact.\n\nJe te donne le script mot pour mot — méthode CIRQUE ou FBI selon le cas.",
+  rdv:        "**MODE CONDUITE DE RDV activé** 🗓️\n\nOn travaille sur quoi :\n- Le cadrage d'ouverture\n- La phase découverte\n- La gestion des objections en RDV\n- Le closing\n\nDécris ta situation.",
+  free:       "**Sarah Sales 2.0 à ton écoute** 💬\n\nPose ta question, décris ta situation, raconte ce qui bloque. Je suis là.",
+};
+
+// State
+let apiKey = localStorage.getItem('ss2_apikey') || '';
+let messages = [];
+let loading = false;
+let pendingFile = null;
+let recognition = null;
+let isRecording = false;
+let activeMode = null;
+
+// DOM
+const $ = id => document.getElementById(id);
+const modalOverlay  = $('modal-overlay');
+const apiInput      = $('api-input');
+const apiSaveBtn    = $('api-save-btn');
+const homeScreen    = $('home-screen');
+const chatScreen    = $('chat-screen');
+const modeGrid      = $('mode-grid');
+const messagesEl    = $('messages');
+const messagesInner = $('messages-inner');
+const msgInput      = $('msg-input');
+const sendBtn       = $('send-btn');
+const inputBox      = $('input-box');
+const pendingBar    = $('pending-bar');
+const pendingName   = $('pending-name');
+const pendingIcon   = $('pending-icon');
+
+// Init
+function init() {
+  buildModeGrid();
+  if (!apiKey) {
+    modalOverlay.style.display = 'flex';
+  }
+}
+
+// Modal
+apiInput.addEventListener('input', () => {
+  apiSaveBtn.disabled = !apiInput.value.trim().startsWith('sk-');
+});
+apiInput.addEventListener('keydown', e => {
+  if (e.key === 'Enter' && !apiSaveBtn.disabled) saveKey();
+});
+apiSaveBtn.addEventListener('click', saveKey);
+function saveKey() {
+  apiKey = apiInput.value.trim();
+  localStorage.setItem('ss2_apikey', apiKey);
+  modalOverlay.style.display = 'none';
+}
+
+$('edit-key-btn').addEventListener('click', () => {
+  apiInput.value = apiKey;
+  apiSaveBtn.disabled = !apiKey.startsWith('sk-');
+  modalOverlay.style.display = 'flex';
+});
+
+// Navigation
+function goHome() {
+  homeScreen.style.display = 'block';
+  chatScreen.style.display = 'none';
+}
+function goChat(mode) {
+  activeMode = mode;
+  $('chat-mode-icon').textContent  = mode.icon;
+  $('chat-mode-label').textContent = mode.label;
+  messages = [{ role:'assistant', content: MODE_PROMPTS[mode.id] }];
+  renderMessages();
+  homeScreen.style.display = 'none';
+  chatScreen.style.display = 'flex';
+  msgInput.focus();
+}
+
+$('back-btn').addEventListener('click', goHome);
+$('reset-btn').addEventListener('click', () => {
+  if (!activeMode) return;
+  messages = [{ role:'assistant', content: MODE_PROMPTS[activeMode.id] }];
+  renderMessages();
+});
+$('free-card').addEventListener('click', () => goChat({ id:'free', icon:'💬', label:'Chat libre' }));
+
+// Mode grid
+function buildModeGrid() {
+  MODES.forEach(mode => {
+    const card = document.createElement('div');
+    card.className = 'mode-card';
+    card.innerHTML = `<div class="mode-icon">${mode.icon}</div><div class="mode-label">${mode.label}</div><div class="mode-desc">${mode.desc}</div>`;
+    card.addEventListener('click', () => goChat(mode));
+    modeGrid.appendChild(card);
+  });
+}
+
+// Markdown
+function renderInline(t) {
+  return t
+    .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
+    .replace(/\*\*\*(.+?)\*\*\*/g,'<strong>$1</strong>')
+    .replace(/\*\*(.+?)\*\*/g,'<strong>$1</strong>')
+    .replace(/\*(.+?)\*/g,'<em>$1</em>')
+    .replace(/`(.+?)`/g,'<code>$1</code>');
+}
+function renderMarkdown(text) {
+  return text.split('\n').map(line => {
+    if (line.startsWith('### ')) return `<div class="md-h3">${renderInline(line.slice(4))}</div>`;
+    if (line.startsWith('## '))  return `<div class="md-h2">${renderInline(line.slice(3))}</div>`;
+    if (line.startsWith('# '))   return `<div class="md-h1">${renderInline(line.slice(2))}</div>`;
+    if (line.startsWith('> '))   return `<div class="md-bq">${renderInline(line.slice(2))}</div>`;
+    if (line.startsWith('- ') || line.startsWith('* '))
+      return `<div class="md-li"><span class="bullet">·</span><span class="li-text">${renderInline(line.slice(2))}</span></div>`;
+    if (/^\d+\.\s/.test(line)) {
+      const num = line.match(/^(\d+)\./)[1];
+      return `<div class="md-ol"><span class="ol-num">${num}.</span><span class="li-text">${renderInline(line.replace(/^\d+\.\s/,''))}</span></div>`;
+    }
+    if (line.startsWith('---')) return `<hr class="md-hr">`;
+    if (!line.trim()) return `<div class="md-br"></div>`;
+    return `<div>${renderInline(line)}</div>`;
+  }).join('');
+}
+
+// Render
+function renderMessages() {
+  messagesInner.innerHTML = '';
+  messages.forEach(m => addMsgToDOM(m, false));
+  scrollBottom();
+}
+function addMsgToDOM(msg, animate) {
+  const row = document.createElement('div');
+  row.className = 'msg-row ' + (msg.role === 'user' ? 'user' : 'bot');
+  if (!animate) row.style.animation = 'none';
+
+  if (msg.role === 'assistant') {
+    const av = document.createElement('div');
+    av.className = 'avatar'; av.textContent = 'S';
+    row.appendChild(av);
+  }
+
+  const wrap = document.createElement('div');
+  wrap.className = 'bubble-wrap' + (msg.role === 'user' ? ' user' : '');
+
+  if (msg.role === 'user' && msg.fileName) {
+    const badge = document.createElement('div');
+    badge.style.cssText = 'background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);border-radius:8px 8px 0 0;padding:6px 12px;display:flex;align-items:center;gap:6px;font-size:11.5px;color:rgba(255,255,255,0.45);';
+    badge.innerHTML = (msg.fileName.match(/\.(png|jpg|jpeg|webp)$/i) ? '🖼️ ' : '📄 ') + msg.fileName;
+    wrap.appendChild(badge);
+  }
+
+  const bubble = document.createElement('div');
+  bubble.className = 'bubble ' + (msg.role === 'user' ? 'user' : 'bot');
+  if (msg.role === 'user' && msg.fileName) bubble.style.borderRadius = '0 0 4px 16px';
+
+  if (msg.role === 'user') {
+    bubble.textContent = msg.content;
+  } else {
+    bubble.innerHTML = renderMarkdown(msg.content);
+  }
+  wrap.appendChild(bubble);
+  row.appendChild(wrap);
+  messagesInner.appendChild(row);
+}
+function scrollBottom() { messagesEl.scrollTop = messagesEl.scrollHeight; }
+
+function showTyping() {
+  const row = document.createElement('div');
+  row.id = 'typing-row'; row.className = 'msg-row bot';
+  row.innerHTML = '<div class="avatar">S</div><div class="bubble bot" style="padding:0;"><div class="typing-dots"><div class="dot-pulse"></div><div class="dot-pulse"></div><div class="dot-pulse"></div></div></div>';
+  messagesInner.appendChild(row); scrollBottom();
+}
+function hideTyping() { const t = $('typing-row'); if (t) t.remove(); }
+
+function showError(msg) {
+  clearError();
+  const div = document.createElement('div');
+  div.id = 'error-bar'; div.className = 'error-bar'; div.textContent = msg;
+  messagesInner.appendChild(div); scrollBottom();
+}
+function clearError() { const e = $('error-bar'); if (e) e.remove(); }
+
+// Send
+async function send() {
+  const text = msgInput.value.trim();
+  if (!text && !pendingFile) return;
+  if (loading) return;
+  clearError();
+
+  const file = pendingFile;
+  msgInput.value = ''; msgInput.style.height = 'auto';
+  clearPending(); updateSend();
+
+  let content = text, fileName = null, imageData = null;
+  if (file) {
+    fileName = file.name;
+    if (file.type === 'image') imageData = { mediaType: file.mediaType, data: file.data };
+    else content = (text ? text + '\n\n' : 'Analyse ce contenu :\n\n') + file.content;
+  }
+
+  const userMsg = { role:'user', content, fileName };
+  messages.push(userMsg);
+  addMsgToDOM(userMsg, true);
+  showTyping();
+  loading = true; updateSend();
+
+  try {
+    const apiMsgs = messages.map((m, i) => {
+      if (m.role === 'user' && imageData && i === messages.length - 1) {
+        return { role:'user', content:[
+          { type:'image', source:{ type:'base64', media_type: imageData.mediaType, data: imageData.data } },
+          { type:'text', text: m.content || 'Analyse cette image.' }
+        ]};
+      }
+      return { role: m.role, content: m.content };
+    });
+
+    const res = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'x-api-key': apiKey,
+        'anthropic-version': '2023-06-01',
+        'anthropic-dangerous-direct-browser-access': 'true',
+      },
+      body: JSON.stringify({ model:'claude-sonnet-4-20250514', max_tokens:800, system: SYSTEM_PROMPT, messages: apiMsgs }),
+    });
+    const data = await res.json();
+    if (data.error) throw new Error(data.error.message);
+    const reply = data.content?.[0]?.text || 'Pas de réponse.';
+    hideTyping();
+    const botMsg = { role:'assistant', content: reply };
+    messages.push(botMsg);
+    addMsgToDOM(botMsg, true);
+    scrollBottom();
+  } catch(e) {
+    hideTyping(); showError('Erreur : ' + e.message);
+  } finally {
+    loading = false; updateSend();
+  }
+}
+
+msgInput.addEventListener('input', () => {
+  msgInput.style.height = 'auto';
+  msgInput.style.height = Math.min(msgInput.scrollHeight, 120) + 'px';
+  updateSend();
+});
+msgInput.addEventListener('keydown', e => {
+  if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); send(); }
+});
+sendBtn.addEventListener('click', send);
+function updateSend() { sendBtn.disabled = (!msgInput.value.trim() && !pendingFile) || loading; }
+
+// File
+$('attach-btn').addEventListener('click', () => $('file-input').click());
+$('file-input').addEventListener('change', e => {
+  const f = e.target.files[0]; if (!f) return;
+  if (f.type.startsWith('image/')) {
+    const r = new FileReader();
+    r.onload = ev => setPending({ name:f.name, type:'image', mediaType:f.type, data:ev.target.result.split(',')[1] });
+    r.readAsDataURL(f);
+  } else {
+    const r = new FileReader();
+    r.onload = ev => setPending({ name:f.name, type:'text', content:ev.target.result });
+    r.readAsText(f);
+  }
+  e.target.value = '';
+});
+function setPending(f) {
+  pendingFile = f;
+  pendingIcon.textContent = f.type === 'image' ? '🖼️' : '📄';
+  pendingName.textContent = f.name;
+  pendingBar.style.display = 'block';
+  updateSend();
+}
+function clearPending() { pendingFile = null; pendingBar.style.display = 'none'; updateSend(); }
+$('remove-file').addEventListener('click', clearPending);
+
+// Voice
+$('mic-btn').addEventListener('click', () => {
+  const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+  if (!SR) { showError('Reconnaissance vocale non supportée.'); return; }
+  if (isRecording) { recognition && recognition.stop(); setRec(false); return; }
+  recognition = new SR(); recognition.lang='fr-FR'; recognition.continuous=true; recognition.interimResults=true;
+  recognition.onresult = e => { msgInput.value = Array.from(e.results).map(x=>x[0].transcript).join(''); updateSend(); };
+  recognition.onend = () => setRec(false);
+  recognition.onerror = () => { setRec(false); showError('Erreur micro.'); };
+  recognition.start(); setRec(true);
+});
+function setRec(on) {
+  isRecording = on;
+  $('mic-btn').textContent = on ? '⏹️' : '🎙️';
+  $('mic-btn').classList.toggle('rec-active', on);
+  inputBox.classList.toggle('recording', on);
+  msgInput.placeholder = on ? '🎙️ Écoute en cours...' : 'Écris ou dicte ton message...';
+}
+
+init();
+</script>
+</body>
+</html>
