@@ -1,6 +1,3 @@
-Sarah sales 2 · HTML
-Copier
-
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -554,8 +551,10 @@ async function send() {
   loading = true; updateSend();
  
   try {
-    const apiMsgs = messages.map((m, i) => {
-      if (m.role === 'user' && imageData && i === messages.length - 1) {
+    // Limite aux 10 derniers messages pour éviter les rate limits
+    const recentMessages = messages.slice(-10);
+    const apiMsgs = recentMessages.map((m, i) => {
+      if (m.role === 'user' && imageData && i === recentMessages.length - 1) {
         return { role:'user', content:[
           { type:'image', source:{ type:'base64', media_type: imageData.mediaType, data: imageData.data } },
           { type:'text', text: m.content || 'Analyse cette image.' }
