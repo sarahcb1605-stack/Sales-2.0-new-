@@ -1,3 +1,6 @@
+Sarah sales 2 · HTML
+Copier
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -10,7 +13,7 @@
     html, body { height: 100%; background: #0a0a0a; font-family: 'DM Sans', sans-serif; color: #fff; }
     ::-webkit-scrollbar { width: 3px; }
     ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 2px; }
-
+ 
     #modal-overlay {
       position: fixed; inset: 0; background: rgba(0,0,0,0.88);
       display: none; align-items: center; justify-content: center;
@@ -36,7 +39,7 @@
       font-weight: 500; cursor: pointer; font-family: 'DM Sans', sans-serif;
     }
     #api-save-btn:disabled { background: rgba(255,255,255,0.06); cursor: default; }
-
+ 
     #home-screen { min-height: 100vh; display: block; }
     .home-inner  { max-width: 640px; margin: 0 auto; padding: 50px 18px 40px; }
     .badge {
@@ -49,7 +52,7 @@
     h1.title { font-family: 'Playfair Display', serif; font-size: 52px; font-weight: 900; line-height: 1.1; margin-bottom: 12px; }
     h1.title em { color: rgba(167,139,250,0.8); font-style: normal; }
     .subtitle { font-size: 13.5px; color: rgba(255,255,255,0.3); line-height: 1.7; max-width: 340px; margin: 0 auto 40px; }
-
+ 
     .free-card {
       cursor: pointer; background: rgba(167,139,250,0.05);
       border: 1px solid rgba(167,139,250,0.15); border-radius: 14px;
@@ -65,11 +68,11 @@
     .free-label { font-size: 14px; font-weight: 500; margin-bottom: 2px; }
     .free-desc  { font-size: 12px; color: rgba(255,255,255,0.3); }
     .free-arrow { color: rgba(167,139,250,0.4); font-size: 20px; margin-left: auto; }
-
+ 
     .divider { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; }
     .divider-line { flex: 1; height: 1px; background: rgba(255,255,255,0.06); }
     .divider-text { font-size: 10.5px; color: rgba(255,255,255,0.18); letter-spacing: 2px; text-transform: uppercase; }
-
+ 
     .mode-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 9px; margin-bottom: 30px; }
     .mode-card {
       cursor: pointer; background: rgba(255,255,255,0.03);
@@ -80,11 +83,11 @@
     .mode-icon  { font-size: 19px; margin-bottom: 7px; }
     .mode-label { font-size: 13.5px; font-weight: 500; margin-bottom: 3px; }
     .mode-desc  { font-size: 11.5px; color: rgba(255,255,255,0.28); line-height: 1.5; }
-
+ 
     .footer { text-align: center; border-top: 1px solid rgba(255,255,255,0.05); padding-top: 20px; }
     .footer p { font-size: 10.5px; color: rgba(255,255,255,0.13); letter-spacing: 1px; text-transform: uppercase; margin-bottom: 8px; }
     .edit-key-btn { background: none; border: none; color: rgba(255,255,255,0.2); font-size: 11px; cursor: pointer; text-decoration: underline; font-family: 'DM Sans', sans-serif; }
-
+ 
     #chat-screen { height: 100vh; display: none; flex-direction: column; }
     .chat-header {
       padding: 11px 16px; border-bottom: 1px solid rgba(255,255,255,0.07);
@@ -93,14 +96,14 @@
     .back-btn { background: none; border: none; color: rgba(255,255,255,0.35); cursor: pointer; font-size: 20px; padding: 2px 6px; border-radius: 6px; }
     .mode-title { font-size: 13px; font-weight: 500; color: rgba(255,255,255,0.55); }
     .reset-btn  { background: none; border: none; color: rgba(255,255,255,0.25); cursor: pointer; font-size: 11px; letter-spacing: 0.5px; font-family: 'DM Sans', sans-serif; }
-
+ 
     #messages { flex: 1; overflow-y: auto; padding: 20px 14px; }
     .messages-inner { max-width: 660px; margin: 0 auto; }
-
+ 
     .msg-row { display: flex; margin-bottom: 14px; gap: 10px; animation: fadeUp 0.22s ease; }
     .msg-row.user { justify-content: flex-end; }
     .msg-row.bot  { justify-content: flex-start; }
-
+ 
     .avatar {
       width: 30px; height: 30px; border-radius: 50%; flex-shrink: 0; margin-top: 2px;
       background: rgba(167,139,250,0.12); border: 1px solid rgba(167,139,250,0.2);
@@ -132,16 +135,16 @@
     .md-ol .ol-num { color: rgba(167,139,250,0.5); min-width: 16px; font-size: 12px; flex-shrink: 0; }
     .md-hr { border: none; border-top: 1px solid rgba(255,255,255,0.07); margin: 10px 0; }
     .md-br { height: 5px; }
-
+ 
     @keyframes fadeUp { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
     @keyframes pulse  { 0%,100% { opacity: 0.3; transform: scale(0.8); } 50% { opacity: 1; transform: scale(1); } }
-
+ 
     .typing-dots { display: flex; gap: 5px; align-items: center; padding: 12px 16px; }
     .dot-pulse { width: 6px; height: 6px; border-radius: 50%; background: rgba(167,139,250,0.5); }
     .dot-pulse:nth-child(1) { animation: pulse 1.2s ease-in-out 0s infinite; }
     .dot-pulse:nth-child(2) { animation: pulse 1.2s ease-in-out 0.2s infinite; }
     .dot-pulse:nth-child(3) { animation: pulse 1.2s ease-in-out 0.4s infinite; }
-
+ 
     #pending-bar { padding: 0 14px 6px; display: none; }
     .pending-inner {
       max-width: 660px; margin: 0 auto;
@@ -150,7 +153,7 @@
     }
     .pending-name { flex: 1; font-size: 12px; color: rgba(255,255,255,0.55); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
     .remove-file  { background: none; border: none; color: rgba(255,255,255,0.3); cursor: pointer; font-size: 18px; }
-
+ 
     #input-area { padding: 8px 14px 16px; border-top: 1px solid rgba(255,255,255,0.07); flex-shrink: 0; }
     .input-inner { max-width: 660px; margin: 0 auto; }
     .input-box {
@@ -183,7 +186,7 @@
   </style>
 </head>
 <body>
-
+ 
 <!-- MODAL -->
 <div id="modal-overlay">
   <div id="modal-box">
@@ -195,7 +198,7 @@
     <button id="api-save-btn" disabled>Enregistrer et lancer</button>
   </div>
 </div>
-
+ 
 <!-- HOME -->
 <div id="home-screen">
   <div class="home-inner">
@@ -224,7 +227,7 @@
     </div>
   </div>
 </div>
-
+ 
 <!-- CHAT -->
 <div id="chat-screen">
   <div class="chat-header">
@@ -259,16 +262,16 @@
     </div>
   </div>
 </div>
-
+ 
 <script>
 const SYSTEM_PROMPT = `Tu es SARAH SALES 2.0, coach commercial ultra-exigeant. Méthode Shanne Melendez adaptée.
-
+ 
 RÈGLES DE RÉPONSE : Sois concise et directe. Max 150 mots par réponse sauf si l'utilisateur demande explicitement plus. Pas de blabla. Pas de validation systématique. Va droit au but.
-
+ 
 IDENTITÉ : Experte en aide à la décision. Disqualifie, ne convaincs pas. 30% parle, 70% écoute et questionne.
-
+ 
 LANGAGE INTERDIT : "J'espère que ça vous conviendra" / "Désolée de vous déranger" / "Ça pourrait peut-être" / "Je me permets"
-
+ 
 MÉTHODE CIRQUE :
 C=CREUSER : "Qu'est-ce qui vous fait dire ça ?" + silence
 I=ISOLER : "Si on met ça de côté, qu'est-ce qui pourrait nous empêcher de collaborer ?" + silence
@@ -276,25 +279,25 @@ R=RÉPONDRE : preuve sociale / recadrage "Et si dans 6 mois rien ne changeait ?"
 Q=QUESTIONNER : interquestion pour approfondir
 U=UTILISER : retourner l'objection
 E=CONTRÔLER : "Est-ce que ça a répondu à votre question ?" + verrouiller
-
+ 
 OBJECTIONS :
 "Trop cher" → "Vous comparez à quoi ?" → "On parle d'un manque d'argent ou d'un manque de priorité ?"
 "J'y réfléchis" → "C'est une vraie réflexion ou une façon polie de me dire non ?" → caler prochaine étape
 "Mon associé" → "S'il n'y avait pas votre associé, vous décideriez aujourd'hui ?" → "Qu'est-ce qu'il vous faut pour le convaincre ?"
 "Pas le temps" → "Vous avez déjà eu un moment parfait pour démarrer quelque chose ?"
-
+ 
 COLD CALL : Accroche personnalisée → cadrage → CQQCOQP → écoute → RDV.
 Passage RDV : "Deux possibilités. Soit on continue — mais vous m'avez dit peu de temps. Soit on cale 20 minutes pour aller au fond. Qu'est-ce qui vous convient ?"
-
+ 
 RELANCES : 1.Breakup email 2.LinkedIn subtil 3.Valeur sectorielle 4.Introduction-réciprocité 5.Défi direct
-
+ 
 CLOSING : Closing = conséquence d'une bonne découverte. Rétro planning : "Quand voulez-vous que ça soit en place ?" → remonter les étapes.
 Cadrage RDV : "J'ai prévu 25 min. D'abord vos enjeux, ensuite ce qu'on fait en lien, et si ça matche, on parle de la suite. Ça vous va ?"
-
+ 
 FRAMEWORK P/P/F : Présent → Passé → Futur → interquestion "Comment ?" si blocage.
-
+ 
 QUESTIONS CLÉ : "Qu'est-ce qui vous fait dire ça ?" / "Si on met ça de côté..." / "C'est quoi le vrai frein ?" / "Qu'est-ce qui changerait si..."
-
+ 
 FBI NÉGOCIATION :
 1.MIRRORING : répéter 2-3 derniers mots + interrogatif + silence
 2.CALIBRÉES : "pourquoi" → "comment/en quoi". "Comment rendre cette proposition acceptable ?"
@@ -303,14 +306,14 @@ FBI NÉGOCIATION :
 5.C'EST EXACT : reformuler sa position avec ses mots → viser "c'est exact" pas "vous avez raison"
 6.SIGNE NOIR : info cachée qui change tout — écoute active + silence
 7.SILENCE CALCULÉ : compter jusqu'à 5 après chaque question
-
+ 
 ROLEPLAY : prospect résistant réaliste, ne cède pas sans vrai creusage
 DÉBRIEF : erreurs posture/questions/silences. UNE chose concrète à la fin.
 PREP RDV : objectif sortie / cadrage / objections probables / 5 questions P/P/F / rétro planning
 QUESTION MÉTHODE : réponse courte, formulation exacte
 OBJECTIONS & NÉGO : CIRQUE ou FBI, script mot pour mot
 CONDUITE RDV : cadrage / découverte / objections / closing`;
-
+ 
 const MODES = [
   { id:"roleplay",   icon:"🎭", label:"Roleplay",         desc:"S'entraîner face à un prospect" },
   { id:"debrief",    icon:"🔍", label:"Débrief de call",  desc:"Analyser ce qui s'est passé" },
@@ -319,7 +322,7 @@ const MODES = [
   { id:"objections", icon:"⚡", label:"Objections & Négo",desc:"Scripts mot pour mot" },
   { id:"rdv",        icon:"🗓️", label:"Conduite de RDV",  desc:"Cadrage, découverte, closing" },
 ];
-
+ 
 const MODE_PROMPTS = {
   roleplay:   "**MODE ROLEPLAY activé** 🎭\n\nDonne-moi le contexte :\n- Ton secteur d'activité\n- Le profil du prospect (poste, taille boîte)\n- Où tu en es (premier call ? relance ? RDV chaud ?)\n- Ce que tu vends en une phrase\n\nJe joue le prospect. Je ne cède pas facilement.",
   debrief:    "**MODE DÉBRIEF activé** 🔍\n\nRaconte-moi ce qui s'est passé : l'appel, le RDV, ce qui a bloqué. Sois précise — les mots exacts si tu t'en souviens.\n\nJe t'identifie les 2-3 erreurs clés et te donne UNE chose à corriger en priorité.",
@@ -329,7 +332,7 @@ const MODE_PROMPTS = {
   rdv:        "**MODE CONDUITE DE RDV activé** 🗓️\n\nOn travaille sur quoi :\n- Le cadrage d'ouverture\n- La phase découverte\n- La gestion des objections en RDV\n- Le closing\n\nDécris ta situation.",
   free:       "**Sarah Sales 2.0 à ton écoute** 💬\n\nPose ta question, décris ta situation, raconte ce qui bloque. Je suis là.",
 };
-
+ 
 // State
 let apiKey = localStorage.getItem('ss2_apikey') || '';
 let messages = [];
@@ -338,7 +341,7 @@ let pendingFile = null;
 let recognition = null;
 let isRecording = false;
 let activeMode = null;
-
+ 
 // DOM
 const $ = id => document.getElementById(id);
 const modalOverlay  = $('modal-overlay');
@@ -355,7 +358,7 @@ const inputBox      = $('input-box');
 const pendingBar    = $('pending-bar');
 const pendingName   = $('pending-name');
 const pendingIcon   = $('pending-icon');
-
+ 
 // Init
 function init() {
   buildModeGrid();
@@ -363,7 +366,7 @@ function init() {
     modalOverlay.style.display = 'flex';
   }
 }
-
+ 
 // Modal
 apiInput.addEventListener('input', () => {
   apiSaveBtn.disabled = !apiInput.value.trim().startsWith('sk-');
@@ -373,41 +376,73 @@ apiInput.addEventListener('keydown', e => {
 });
 apiSaveBtn.addEventListener('click', saveKey);
 function saveKey() {
-  apiKey = apiInput.value.trim();
+  apiKey = apiInput.value.replace(/\s/g, '').replace(/[^\x20-\x7E]/g, '').trim();
   localStorage.setItem('ss2_apikey', apiKey);
   modalOverlay.style.display = 'none';
 }
-
+ 
 $('edit-key-btn').addEventListener('click', () => {
   apiInput.value = apiKey;
   apiSaveBtn.disabled = !apiKey.startsWith('sk-');
   modalOverlay.style.display = 'flex';
 });
-
+ 
 // Navigation
 function goHome() {
   homeScreen.style.display = 'block';
   chatScreen.style.display = 'none';
 }
+function saveHistory() {
+  if (!activeMode) return;
+  try {
+    localStorage.setItem('ss2_mode', JSON.stringify(activeMode));
+    localStorage.setItem('ss2_messages', JSON.stringify(messages));
+  } catch(e) {}
+}
+ 
+function loadHistory() {
+  try {
+    const savedMode = localStorage.getItem('ss2_mode');
+    const savedMessages = localStorage.getItem('ss2_messages');
+    if (savedMode && savedMessages) {
+      const mode = JSON.parse(savedMode);
+      const msgs = JSON.parse(savedMessages);
+      if (msgs.length > 1) {
+        activeMode = mode;
+        messages = msgs;
+        $('chat-mode-icon').textContent  = mode.icon;
+        $('chat-mode-label').textContent = mode.label;
+        renderMessages();
+        homeScreen.style.display = 'none';
+        chatScreen.style.display = 'flex';
+        return true;
+      }
+    }
+  } catch(e) {}
+  return false;
+}
+ 
 function goChat(mode) {
   activeMode = mode;
   $('chat-mode-icon').textContent  = mode.icon;
   $('chat-mode-label').textContent = mode.label;
   messages = [{ role:'assistant', content: MODE_PROMPTS[mode.id] }];
+  saveHistory();
   renderMessages();
   homeScreen.style.display = 'none';
   chatScreen.style.display = 'flex';
   msgInput.focus();
 }
-
+ 
 $('back-btn').addEventListener('click', goHome);
 $('reset-btn').addEventListener('click', () => {
   if (!activeMode) return;
   messages = [{ role:'assistant', content: MODE_PROMPTS[activeMode.id] }];
+  saveHistory();
   renderMessages();
 });
 $('free-card').addEventListener('click', () => goChat({ id:'free', icon:'💬', label:'Chat libre' }));
-
+ 
 // Mode grid
 function buildModeGrid() {
   MODES.forEach(mode => {
@@ -418,7 +453,7 @@ function buildModeGrid() {
     modeGrid.appendChild(card);
   });
 }
-
+ 
 // Markdown
 function renderInline(t) {
   return t
@@ -445,7 +480,7 @@ function renderMarkdown(text) {
     return `<div>${renderInline(line)}</div>`;
   }).join('');
 }
-
+ 
 // Render
 function renderMessages() {
   messagesInner.innerHTML = '';
@@ -456,27 +491,27 @@ function addMsgToDOM(msg, animate) {
   const row = document.createElement('div');
   row.className = 'msg-row ' + (msg.role === 'user' ? 'user' : 'bot');
   if (!animate) row.style.animation = 'none';
-
+ 
   if (msg.role === 'assistant') {
     const av = document.createElement('div');
     av.className = 'avatar'; av.textContent = 'S';
     row.appendChild(av);
   }
-
+ 
   const wrap = document.createElement('div');
   wrap.className = 'bubble-wrap' + (msg.role === 'user' ? ' user' : '');
-
+ 
   if (msg.role === 'user' && msg.fileName) {
     const badge = document.createElement('div');
     badge.style.cssText = 'background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);border-radius:8px 8px 0 0;padding:6px 12px;display:flex;align-items:center;gap:6px;font-size:11.5px;color:rgba(255,255,255,0.45);';
     badge.innerHTML = (msg.fileName.match(/\.(png|jpg|jpeg|webp)$/i) ? '🖼️ ' : '📄 ') + msg.fileName;
     wrap.appendChild(badge);
   }
-
+ 
   const bubble = document.createElement('div');
   bubble.className = 'bubble ' + (msg.role === 'user' ? 'user' : 'bot');
   if (msg.role === 'user' && msg.fileName) bubble.style.borderRadius = '0 0 4px 16px';
-
+ 
   if (msg.role === 'user') {
     bubble.textContent = msg.content;
   } else {
@@ -487,7 +522,7 @@ function addMsgToDOM(msg, animate) {
   messagesInner.appendChild(row);
 }
 function scrollBottom() { messagesEl.scrollTop = messagesEl.scrollHeight; }
-
+ 
 function showTyping() {
   const row = document.createElement('div');
   row.id = 'typing-row'; row.className = 'msg-row bot';
@@ -495,7 +530,7 @@ function showTyping() {
   messagesInner.appendChild(row); scrollBottom();
 }
 function hideTyping() { const t = $('typing-row'); if (t) t.remove(); }
-
+ 
 function showError(msg) {
   clearError();
   const div = document.createElement('div');
@@ -503,31 +538,31 @@ function showError(msg) {
   messagesInner.appendChild(div); scrollBottom();
 }
 function clearError() { const e = $('error-bar'); if (e) e.remove(); }
-
+ 
 // Send
 async function send() {
   const text = msgInput.value.trim();
   if (!text && !pendingFile) return;
   if (loading) return;
   clearError();
-
+ 
   const file = pendingFile;
   msgInput.value = ''; msgInput.style.height = 'auto';
   clearPending(); updateSend();
-
+ 
   let content = text, fileName = null, imageData = null;
   if (file) {
     fileName = file.name;
     if (file.type === 'image') imageData = { mediaType: file.mediaType, data: file.data };
     else content = (text ? text + '\n\n' : 'Analyse ce contenu :\n\n') + file.content;
   }
-
+ 
   const userMsg = { role:'user', content, fileName };
   messages.push(userMsg);
   addMsgToDOM(userMsg, true);
   showTyping();
   loading = true; updateSend();
-
+ 
   try {
     const apiMsgs = messages.map((m, i) => {
       if (m.role === 'user' && imageData && i === messages.length - 1) {
@@ -538,7 +573,7 @@ async function send() {
       }
       return { role: m.role, content: m.content };
     });
-
+ 
     const res = await fetch('https://api.anthropic.com/v1/messages', {
       method: 'POST',
       headers: {
@@ -556,6 +591,7 @@ async function send() {
     const botMsg = { role:'assistant', content: reply };
     messages.push(botMsg);
     addMsgToDOM(botMsg, true);
+    saveHistory();
     scrollBottom();
   } catch(e) {
     hideTyping(); showError('Erreur : ' + e.message);
@@ -563,7 +599,7 @@ async function send() {
     loading = false; updateSend();
   }
 }
-
+ 
 msgInput.addEventListener('input', () => {
   msgInput.style.height = 'auto';
   msgInput.style.height = Math.min(msgInput.scrollHeight, 120) + 'px';
@@ -574,7 +610,7 @@ msgInput.addEventListener('keydown', e => {
 });
 sendBtn.addEventListener('click', send);
 function updateSend() { sendBtn.disabled = (!msgInput.value.trim() && !pendingFile) || loading; }
-
+ 
 // File
 $('attach-btn').addEventListener('click', () => $('file-input').click());
 $('file-input').addEventListener('change', e => {
@@ -599,7 +635,7 @@ function setPending(f) {
 }
 function clearPending() { pendingFile = null; pendingBar.style.display = 'none'; updateSend(); }
 $('remove-file').addEventListener('click', clearPending);
-
+ 
 // Voice
 $('mic-btn').addEventListener('click', () => {
   const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
@@ -618,7 +654,9 @@ function setRec(on) {
   inputBox.classList.toggle('recording', on);
   msgInput.placeholder = on ? '🎙️ Écoute en cours...' : 'Écris ou dicte ton message...';
 }
-
+ 
+// Load history on startup
+if (apiKey) loadHistory();
 init();
 </script>
 </body>
