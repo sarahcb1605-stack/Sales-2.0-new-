@@ -395,38 +395,28 @@ function goHome() {
 function saveHistory() {
   if (!activeMode) return;
   try {
-    localStorage.setItem('ss2_mode', JSON.stringify(activeMode));
-    localStorage.setItem('ss2_messages', JSON.stringify(messages));
+    localStorage.setItem('ss2_history_' + activeMode.id, JSON.stringify(messages));
+    localStorage.setItem('ss2_last_mode', JSON.stringify(activeMode));
   } catch(e) {}
 }
  
-function loadHistory() {
+function loadModeHistory(mode) {
   try {
-    const savedMode = localStorage.getItem('ss2_mode');
-    const savedMessages = localStorage.getItem('ss2_messages');
-    if (savedMode && savedMessages) {
-      const mode = JSON.parse(savedMode);
-      const msgs = JSON.parse(savedMessages);
-      if (msgs.length > 1) {
-        activeMode = mode;
-        messages = msgs;
-        $('chat-mode-icon').textContent  = mode.icon;
-        $('chat-mode-label').textContent = mode.label;
-        renderMessages();
-        homeScreen.style.display = 'none';
-        chatScreen.style.display = 'flex';
-        return true;
-      }
+    const saved = localStorage.getItem('ss2_history_' + mode.id);
+    if (saved) {
+      const msgs = JSON.parse(saved);
+      if (msgs.length > 1) return msgs;
     }
   } catch(e) {}
-  return false;
+  return null;
 }
  
 function goChat(mode) {
   activeMode = mode;
   $('chat-mode-icon').textContent  = mode.icon;
   $('chat-mode-label').textContent = mode.label;
-  messages = [{ role:'assistant', content: MODE_PROMPTS[mode.id] }];
+  const saved = loadModeHistory(mode);
+  messages = saved || [{ role:'assistant', content: MODE_PROMPTS[mode.id] }];
   saveHistory();
   renderMessages();
   homeScreen.style.display = 'none';
@@ -438,7 +428,7 @@ $('back-btn').addEventListener('click', goHome);
 $('reset-btn').addEventListener('click', () => {
   if (!activeMode) return;
   messages = [{ role:'assistant', content: MODE_PROMPTS[activeMode.id] }];
-  saveHistory();
+  try { localStorage.removeItem('ss2_history_' + activeMode.id); } catch(e) {}
   renderMessages();
 });
 $('free-card').addEventListener('click', () => goChat({ id:'free', icon:'💬', label:'Chat libre' }));
@@ -656,7 +646,26 @@ function setRec(on) {
 }
  
 // Load history on startup
-if (apiKey) loadHistory();
+function restoreLastSession() {
+  try {
+    const lastMode = localStorage.getItem('ss2_last_mode');
+    if (!lastMode) return;
+    const mode = JSON.parse(lastMode);
+    const saved = localStorage.getItem('ss2_history_' + mode.id);
+    if (!saved) return;
+    const msgs = JSON.parse(saved);
+    if (msgs.length > 1) {
+      activeMode = mode;
+      messages = msgs;
+      $('chat-mode-icon').textContent  = mode.icon;
+      $('chat-mode-label').textContent = mode.label;
+      renderMessages();
+      homeScreen.style.display = 'none';
+      chatScreen.style.display = 'flex';
+    }
+  } catch(e) {}
+}
+if (apiKey) restoreLastSession();
 init();
 </script>
 </body>
