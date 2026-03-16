@@ -552,7 +552,7 @@ async function send() {
  
   try {
     // Limite aux 10 derniers messages pour éviter les rate limits
-    const recentMessages = messages.slice(-10);
+    const recentMessages = messages.slice(-30);
     const apiMsgs = recentMessages.map((m, i) => {
       if (m.role === 'user' && imageData && i === recentMessages.length - 1) {
         return { role:'user', content:[
