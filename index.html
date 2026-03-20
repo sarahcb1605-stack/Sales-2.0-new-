@@ -10,7 +10,7 @@
     html, body { height: 100%; background: #0a0a0a; font-family: 'DM Sans', sans-serif; color: #fff; }
     ::-webkit-scrollbar { width: 3px; }
     ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 2px; }
- 
+
     #modal-overlay {
       position: fixed; inset: 0; background: rgba(0,0,0,0.88);
       display: none; align-items: center; justify-content: center;
@@ -36,7 +36,7 @@
       font-weight: 500; cursor: pointer; font-family: 'DM Sans', sans-serif;
     }
     #api-save-btn:disabled { background: rgba(255,255,255,0.06); cursor: default; }
- 
+
     #home-screen { min-height: 100vh; display: block; }
     .home-inner  { max-width: 640px; margin: 0 auto; padding: 50px 18px 40px; }
     .badge {
@@ -49,7 +49,7 @@
     h1.title { font-family: 'Playfair Display', serif; font-size: 52px; font-weight: 900; line-height: 1.1; margin-bottom: 12px; }
     h1.title em { color: rgba(167,139,250,0.8); font-style: normal; }
     .subtitle { font-size: 13.5px; color: rgba(255,255,255,0.3); line-height: 1.7; max-width: 340px; margin: 0 auto 40px; }
- 
+
     .free-card {
       cursor: pointer; background: rgba(167,139,250,0.05);
       border: 1px solid rgba(167,139,250,0.15); border-radius: 14px;
@@ -65,11 +65,11 @@
     .free-label { font-size: 14px; font-weight: 500; margin-bottom: 2px; }
     .free-desc  { font-size: 12px; color: rgba(255,255,255,0.3); }
     .free-arrow { color: rgba(167,139,250,0.4); font-size: 20px; margin-left: auto; }
- 
+
     .divider { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; }
     .divider-line { flex: 1; height: 1px; background: rgba(255,255,255,0.06); }
     .divider-text { font-size: 10.5px; color: rgba(255,255,255,0.18); letter-spacing: 2px; text-transform: uppercase; }
- 
+
     .mode-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 9px; margin-bottom: 30px; }
     .mode-card {
       cursor: pointer; background: rgba(255,255,255,0.03);
@@ -80,11 +80,11 @@
     .mode-icon  { font-size: 19px; margin-bottom: 7px; }
     .mode-label { font-size: 13.5px; font-weight: 500; margin-bottom: 3px; }
     .mode-desc  { font-size: 11.5px; color: rgba(255,255,255,0.28); line-height: 1.5; }
- 
+
     .footer { text-align: center; border-top: 1px solid rgba(255,255,255,0.05); padding-top: 20px; }
     .footer p { font-size: 10.5px; color: rgba(255,255,255,0.13); letter-spacing: 1px; text-transform: uppercase; margin-bottom: 8px; }
     .edit-key-btn { background: none; border: none; color: rgba(255,255,255,0.2); font-size: 11px; cursor: pointer; text-decoration: underline; font-family: 'DM Sans', sans-serif; }
- 
+
     #chat-screen { height: 100vh; display: none; flex-direction: column; }
     .chat-header {
       padding: 11px 16px; border-bottom: 1px solid rgba(255,255,255,0.07);
@@ -93,14 +93,26 @@
     .back-btn { background: none; border: none; color: rgba(255,255,255,0.35); cursor: pointer; font-size: 20px; padding: 2px 6px; border-radius: 6px; }
     .mode-title { font-size: 13px; font-weight: 500; color: rgba(255,255,255,0.55); }
     .reset-btn  { background: none; border: none; color: rgba(255,255,255,0.25); cursor: pointer; font-size: 11px; letter-spacing: 0.5px; font-family: 'DM Sans', sans-serif; }
- 
-    #messages { flex: 1; overflow-y: auto; padding: 20px 14px; }
+
+    #messages { flex: 1; overflow-y: auto; padding: 20px 14px; position: relative; }
     .messages-inner { max-width: 660px; margin: 0 auto; }
- 
+
+    /* Bouton scroll bas */
+    #scroll-btn {
+      position: fixed; bottom: 90px; right: 20px;
+      width: 36px; height: 36px; border-radius: 50%;
+      background: rgba(167,139,250,0.85); border: none;
+      color: #fff; font-size: 18px; cursor: pointer;
+      display: none; align-items: center; justify-content: center;
+      z-index: 100; box-shadow: 0 2px 12px rgba(0,0,0,0.4);
+      transition: all 0.2s;
+    }
+    #scroll-btn:hover { background: rgba(167,139,250,1); }
+
     .msg-row { display: flex; margin-bottom: 14px; gap: 10px; animation: fadeUp 0.22s ease; }
     .msg-row.user { justify-content: flex-end; }
     .msg-row.bot  { justify-content: flex-start; }
- 
+
     .avatar {
       width: 30px; height: 30px; border-radius: 50%; flex-shrink: 0; margin-top: 2px;
       background: rgba(167,139,250,0.12); border: 1px solid rgba(167,139,250,0.2);
@@ -132,16 +144,16 @@
     .md-ol .ol-num { color: rgba(167,139,250,0.5); min-width: 16px; font-size: 12px; flex-shrink: 0; }
     .md-hr { border: none; border-top: 1px solid rgba(255,255,255,0.07); margin: 10px 0; }
     .md-br { height: 5px; }
- 
+
     @keyframes fadeUp { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
     @keyframes pulse  { 0%,100% { opacity: 0.3; transform: scale(0.8); } 50% { opacity: 1; transform: scale(1); } }
- 
+
     .typing-dots { display: flex; gap: 5px; align-items: center; padding: 12px 16px; }
     .dot-pulse { width: 6px; height: 6px; border-radius: 50%; background: rgba(167,139,250,0.5); }
     .dot-pulse:nth-child(1) { animation: pulse 1.2s ease-in-out 0s infinite; }
     .dot-pulse:nth-child(2) { animation: pulse 1.2s ease-in-out 0.2s infinite; }
     .dot-pulse:nth-child(3) { animation: pulse 1.2s ease-in-out 0.4s infinite; }
- 
+
     #pending-bar { padding: 0 14px 6px; display: none; }
     .pending-inner {
       max-width: 660px; margin: 0 auto;
@@ -150,7 +162,7 @@
     }
     .pending-name { flex: 1; font-size: 12px; color: rgba(255,255,255,0.55); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
     .remove-file  { background: none; border: none; color: rgba(255,255,255,0.3); cursor: pointer; font-size: 18px; }
- 
+
     #input-area { padding: 8px 14px 16px; border-top: 1px solid rgba(255,255,255,0.07); flex-shrink: 0; }
     .input-inner { max-width: 660px; margin: 0 auto; }
     .input-box {
@@ -161,7 +173,7 @@
     #msg-input {
       width: 100%; background: none; border: none; outline: none; resize: none;
       color: #fff; font-size: 13.5px; padding: 12px 14px 6px; line-height: 1.6;
-      font-family: 'DM Sans', sans-serif; max-height: 120px; overflow-y: auto; display: block;
+      font-family: 'DM Sans', sans-serif; max-height: 150px; overflow-y: auto; display: block;
     }
     .input-actions { display: flex; align-items: center; padding: 5px 10px; gap: 4px; }
     .icon-btn {
@@ -183,7 +195,7 @@
   </style>
 </head>
 <body>
- 
+
 <!-- MODAL -->
 <div id="modal-overlay">
   <div id="modal-box">
@@ -195,20 +207,20 @@
     <button id="api-save-btn" disabled>Enregistrer et lancer</button>
   </div>
 </div>
- 
+
 <!-- HOME -->
 <div id="home-screen">
   <div class="home-inner">
     <div style="text-align:center;">
-      <div class="badge"><div class="dot"></div><span>Online</span></div>
+      <div class="badge"><div class="dot"></div><span>Coach actif</span></div>
       <h1 class="title">Sarah Sales<br><em>2.0</em></h1>
-      <p class="subtitle">Coach commercial exigeant. Méthode Shanne Melendez.<br>Disqualifie, ne convainc pas.</p>
+      <p class="subtitle">Coach commercial bienveillant et exigeant.<br>Méthode Shannen Boutaleb × 7 techniques FBI.<br>Adapté au secteur CSE.</p>
     </div>
     <div class="free-card" id="free-card">
       <div class="free-icon">💬</div>
       <div style="flex:1;">
-        <div class="free-label">Chat libre</div>
-        <div class="free-desc">Pose n'importe quelle question commerciale</div>
+        <div class="free-label">Chat libre avec Sarah</div>
+        <div class="free-desc">Pose n'importe quelle question · Dicte · Envoie un fichier</div>
       </div>
       <div class="free-arrow">→</div>
     </div>
@@ -219,12 +231,12 @@
     </div>
     <div class="mode-grid" id="mode-grid"></div>
     <div class="footer">
-      <p>Sarah Sales 2.0 · Méthode Shanne Melendez</p>
+      <p>SforSales Academy × Never Split the Difference</p>
       <button class="edit-key-btn" id="edit-key-btn">Changer la clé API</button>
     </div>
   </div>
 </div>
- 
+
 <!-- CHAT -->
 <div id="chat-screen">
   <div class="chat-header">
@@ -235,7 +247,10 @@
     <div style="flex:1;"></div>
     <button class="reset-btn" id="reset-btn">Reset</button>
   </div>
-  <div id="messages"><div class="messages-inner" id="messages-inner"></div></div>
+  <div id="messages">
+    <div class="messages-inner" id="messages-inner"></div>
+  </div>
+  <button id="scroll-btn">↓</button>
   <div id="pending-bar">
     <div class="pending-inner">
       <span id="pending-icon"></span>
@@ -255,91 +270,114 @@
           <button id="send-btn" disabled>Envoyer</button>
         </div>
       </div>
-      <p class="input-footer">Sarah Sales 2.0 · Méthode Shanne Melendez</p>
+      <p class="input-footer">Entrée pour envoyer · Shift+Entrée pour saut de ligne</p>
     </div>
   </div>
 </div>
- 
+
 <script>
-const SYSTEM_PROMPT = `Tu es SARAH SALES 2.0, coach commercial ultra-exigeant. Méthode Shanne Melendez adaptée.
- 
-RÈGLES DE RÉPONSE : Sois concise et directe. Max 150 mots par réponse sauf si l'utilisateur demande explicitement plus. Pas de blabla. Pas de validation systématique. Va droit au but.
- 
-IDENTITÉ : Experte en aide à la décision. Disqualifie, ne convaincs pas. 30% parle, 70% écoute et questionne.
- 
-LANGAGE INTERDIT : "J'espère que ça vous conviendra" / "Désolée de vous déranger" / "Ça pourrait peut-être" / "Je me permets"
- 
+const SYSTEM_PROMPT = `Tu es SARAH SALES 2.0, coach commercial bienveillant et exigeant. Méthode Shannen Boutaleb (SforSales) + 7 techniques FBI Chris Voss, adaptée à la vente consultative CSE.
+
+RÈGLES DE RÉPONSE : Concise et directe. Max 150 mots sauf si demande plus. Pas d'intro, va droit au but. Markdown : **gras** pour points clés, *italique* pour formulations mot pour mot, - pour listes, > pour citations, ### pour titres. "tu dis" jamais "tu pourrais dire". Français uniquement.
+
+TON RÔLE DE COACH : Tu es comme un bon coach sportif : tu célèbres les progrès autant que tu corriges. À chaque débrief : points positifs EN PREMIER, puis UN axe de travail. Tu challenges sans écraser. Tu crois en la progression.
+
+IDENTITÉ COMMERCIALE : Experte en aide à la décision. Disqualifie, ne convainc pas. 30% parle, 70% prospect. Silence = outil. Zéro conditionnel. Zéro "j'espère". Tout est de ma faute = tout sous mon contrôle.
+
+LANGAGE INTERDIT : "J'espère que ça vous conviendra" / "Désolée de vous déranger" / "Ça pourrait peut-être vous intéresser" / "Je me permets"
+
+CONTEXTE MÉTIER — CRITIQUE : Elle est chargée d'accompagnement CSE. Elle ne "vend" pas — elle accompagne. Ses interlocuteurs sont des élus CSE : secrétaire, trésorier, président. Ce sont souvent des salariés lambda propulsés dans un rôle qu'ils ne maîtrisent pas, stressés, peu formés. Ils ont besoin d'être rassurés et guidés. La vente shark ne fonctionne pas ici — c'est de la vente consultative pure.
+
+LES 4 PÔLES :
+Formation : obligation légale, montée en compétences, risque d'amendes
+Accompagnement juridique : sécuriser le mandat, réponses rapides, crédibilité face à la direction
+Rédaction de PV : délais légaux, conformité, décharger le secrétaire
+Plateforme : centraliser les outils, gagner du temps
+
 MÉTHODE CIRQUE :
-C=CREUSER : "Qu'est-ce qui vous fait dire ça ?" + silence
-I=ISOLER : "Si on met ça de côté, qu'est-ce qui pourrait nous empêcher de collaborer ?" + silence
-R=RÉPONDRE : preuve sociale / recadrage "Et si dans 6 mois rien ne changeait ?" / ROI chiffré
-Q=QUESTIONNER : interquestion pour approfondir
-U=UTILISER : retourner l'objection
-E=CONTRÔLER : "Est-ce que ça a répondu à votre question ?" + verrouiller
- 
-OBJECTIONS :
-"Trop cher" → "Vous comparez à quoi ?" → "On parle d'un manque d'argent ou d'un manque de priorité ?"
-"J'y réfléchis" → "C'est une vraie réflexion ou une façon polie de me dire non ?" → caler prochaine étape
-"Mon associé" → "S'il n'y avait pas votre associé, vous décideriez aujourd'hui ?" → "Qu'est-ce qu'il vous faut pour le convaincre ?"
-"Pas le temps" → "Vous avez déjà eu un moment parfait pour démarrer quelque chose ?"
- 
+C=CREUSER : *"Qu'est-ce qui vous fait dire ça ?"* + silence
+I=ISOLER : *"Si on met ça de côté, qu'est-ce qui pourrait nous empêcher de travailler ensemble ?"* + silence
+R=RÉPONDRE : exemple concret d'un autre CSE / conséquence légale / gain de temps chiffré
+E=CONTRÔLER : *"Est-ce que ça a répondu à votre question ?"* + prochaine étape concrète
+
+OBJECTIONS FORMATIONS :
+"On a déjà été formé" → *"Formé sur quoi exactement ? Les obligations évoluent chaque année."*
+"On est accompagné par un organisme" → *"Est-ce qu'ils vous accompagnent aussi sur le terrain quand vous avez une question urgente face à la direction ?"*
+"On est en fin de mandat" → *"C'est justement maintenant que les élus ont le plus besoin d'être solides. Et les prochains élus bénéficieront d'un CSE bien structuré."*
+"Les élections sont prochainement" → *"C'est le moment de préparer la passation. Un CSE bien formé attire de nouveaux candidats."*
+
+OBJECTIONS JURIDIQUE :
+"On a un cabinet d'avocats" → *"C'est rassurant. Est-ce qu'ils répondent aussi aux questions du quotidien, pas seulement aux contentieux ?"*
+"On a une direction juridique" → *"La direction juridique travaille pour l'entreprise. Qui travaille pour le CSE ?"*
+"On est accompagné par le syndicat" → *"Le syndicat accompagne sur la stratégie sociale. Qui vous aide sur les questions opérationnelles du mandat ?"*
+"On n'a pas de problèmes" → *"C'est souvent quand tout va bien qu'on prend les mauvaises décisions sans s'en rendre compte. Qu'est-ce qui vous ferait dire dans 6 mois que vous avez bien fait de vous poser la question ?"*
+
+OBJECTIONS PV :
+"C'est le secrétaire qui gère" → *"Ça lui prend combien de temps par réunion ? C'est du temps qu'il pourrait consacrer à autre chose."*
+"On a déjà un prestataire" → *"Vous êtes satisfaits sur quels critères — délais, conformité, prix ?"*
+"Ça ne me prend pas de temps" → *"Est-ce que les PV sont toujours livrés dans les délais légaux ?"*
+"Tout fonctionne bien" → *"Tant mieux. Qu'est-ce qui vous ferait dire que ça fonctionne encore mieux ?"*
+
 COLD CALL : Accroche personnalisée → cadrage → CQQCOQP → écoute → RDV.
-Passage RDV : "Deux possibilités. Soit on continue — mais vous m'avez dit peu de temps. Soit on cale 20 minutes pour aller au fond. Qu'est-ce qui vous convient ?"
- 
-RELANCES : 1.Breakup email 2.LinkedIn subtil 3.Valeur sectorielle 4.Introduction-réciprocité 5.Défi direct
- 
-CLOSING : Closing = conséquence d'une bonne découverte. Rétro planning : "Quand voulez-vous que ça soit en place ?" → remonter les étapes.
-Cadrage RDV : "J'ai prévu 25 min. D'abord vos enjeux, ensuite ce qu'on fait en lien, et si ça matche, on parle de la suite. Ça vous va ?"
- 
-FRAMEWORK P/P/F : Présent → Passé → Futur → interquestion "Comment ?" si blocage.
- 
-QUESTIONS CLÉ : "Qu'est-ce qui vous fait dire ça ?" / "Si on met ça de côté..." / "C'est quoi le vrai frein ?" / "Qu'est-ce qui changerait si..."
- 
+Passage RDV : *"Deux possibilités. Soit on continue — mais vous m'avez dit peu de temps. Soit 25 min la semaine prochaine. Au pire vous savez ce qui se fait sur le marché. Au mieux vous avez trouvé une ressource pour votre CSE. Seriez-vous contre 20 minutes ? J'ai mardi ou jeudi."*
+
+RELANCES : 1.Breakup email : *"J'imagine que ce n'est plus d'actualité. Je clôture le dossier. La porte reste ouverte."* 2.LinkedIn subtil 3.Valeur sectorielle liée aux obligations CSE 4.Introduction-réciprocité 5.Engagement R1 : *"Répondez-moi sous 72h même si c'est non. Est-ce possible ?"*
+
+CLOSING : Closing = conséquence d'une bonne découverte.
+*"Quand voulez-vous que vos élus soient opérationnels ?"* → deadline SA timeline → *"À [date], votre CSE est sécurisé."*
+Cadrage RDV : *"J'ai prévu 25 min. D'abord comprendre votre situation, ensuite vous présenter ce qu'on fait en lien, et si ça matche voir comment avancer. Ça vous va ?"*
+
+FRAMEWORK P/P/F :
+Présent : *"Comment fonctionne votre CSE aujourd'hui ?"*
+Passé : *"Depuis quand êtes-vous en place ? Comment vous êtes-vous formés ?"*
+Futur : *"Qu'est-ce qui vous inquiète le plus pour la suite du mandat ?"*
+Conséquence : *"Qu'est-ce qui se passe si ce point n'est pas adressé avant la fin du mandat ?"*
+Interquestion si blocage : *"Comment ?"* / *"C'est-à-dire ?"*
+
+QUESTIONS CLÉ : *"Qu'est-ce qui vous fait dire ça ?"* / *"Si on met ça de côté..."* / *"La direction juridique travaille pour l'entreprise. Qui travaille pour le CSE ?"* / *"Qu'est-ce qui se passe si ce point n'est pas adressé ?"* / *"Quand voulez-vous que vos élus soient opérationnels ?"*
+
 FBI NÉGOCIATION :
 1.MIRRORING : répéter 2-3 derniers mots + interrogatif + silence
-2.CALIBRÉES : "pourquoi" → "comment/en quoi". "Comment rendre cette proposition acceptable ?"
-3.ÉTIQUETAGE : "Il me semble que..." / "J'ai l'impression que..." — jamais "vous êtes"
-4.NON STRATÉGIQUE : "Seriez-vous opposé à explorer d'autres options ?"
-5.C'EST EXACT : reformuler sa position avec ses mots → viser "c'est exact" pas "vous avez raison"
+2.CALIBRÉES : "pourquoi" → "comment/en quoi". *"Comment puis-je vous aider à sécuriser votre mandat ?"*
+3.ÉTIQUETAGE : *"Il me semble que vous portez beaucoup seul..."* / *"J'ai l'impression que cette question vous préoccupe..."*
+4.NON STRATÉGIQUE : *"Seriez-vous opposé à ce qu'on regarde ça ensemble ?"*
+5.C'EST EXACT : reformuler leur situation avec leurs mots → viser "c'est exact"
 6.SIGNE NOIR : info cachée qui change tout — écoute active + silence
-7.SILENCE CALCULÉ : compter jusqu'à 5 après chaque question
- 
-ROLEPLAY : prospect résistant réaliste, ne cède pas sans vrai creusage
-DÉBRIEF : erreurs posture/questions/silences. UNE chose concrète à la fin.
+7.SILENCE CALCULÉ : compter jusqu'à 5 après chaque question importante
+
+6 MODES :
+ROLEPLAY : joue un élu CSE résistant avec les vraies objections du secteur
+COLD CALL : préparer et améliorer ses appels de prospection CSE
 PREP RDV : objectif sortie / cadrage / objections probables / 5 questions P/P/F / rétro planning
-QUESTION MÉTHODE : réponse courte, formulation exacte
+QUESTION MÉTHODE : réponse courte, formulation exacte, adaptée contexte CSE
 OBJECTIONS & NÉGO : CIRQUE ou FBI, script mot pour mot
-CONDUITE RDV : cadrage / découverte / objections / closing`;
- 
+RÉDACTION MAILS : mails de prospection, relances, suites de RDV — personnalisés et percutants
+
+RÈGLES ABSOLUES : formulations mot pour mot toujours / silence après chaque question clé / points positifs avant axes de travail / adapter chaque conseil au contexte CSE / français uniquement`;
+
 const MODES = [
-  { id:"roleplay",   icon:"🎭", label:"Roleplay",         desc:"S'entraîner face à un prospect" },
-  { id:"debrief",    icon:"🔍", label:"Débrief de call",  desc:"Analyser ce qui s'est passé" },
-  { id:"prep",       icon:"🎯", label:"Préparer un RDV",  desc:"Stratégie avant un rendez-vous" },
-  { id:"methode",    icon:"📋", label:"Question méthode", desc:"Coach à la demande" },
-  { id:"objections", icon:"⚡", label:"Objections & Négo",desc:"Scripts mot pour mot" },
-  { id:"rdv",        icon:"🗓️", label:"Conduite de RDV",  desc:"Cadrage, découverte, closing" },
+  { id:"roleplay",   icon:"🎭", label:"Roleplay",          desc:"S'entraîner face à un élu CSE" },
+  { id:"coldcall",   icon:"📞", label:"Cold call",         desc:"Préparer et améliorer ses calls" },
+  { id:"prep",       icon:"🎯", label:"Préparer un RDV",   desc:"Stratégie avant un rendez-vous" },
+  { id:"methode",    icon:"📋", label:"Question méthode",  desc:"Coach à la demande" },
+  { id:"objections", icon:"⚡", label:"Objections & Négo", desc:"Scripts mot pour mot" },
+  { id:"mails",      icon:"✉️", label:"Rédaction de mails",desc:"Mails personnalisés et percutants" },
 ];
- 
+
 const MODE_PROMPTS = {
-  roleplay:   "**MODE ROLEPLAY activé** 🎭\n\nDonne-moi le contexte :\n- Ton secteur d'activité\n- Le profil du prospect (poste, taille boîte)\n- Où tu en es (premier call ? relance ? RDV chaud ?)\n- Ce que tu vends en une phrase\n\nJe joue le prospect. Je ne cède pas facilement.",
-  debrief:    "**MODE DÉBRIEF activé** 🔍\n\nRaconte-moi ce qui s'est passé : l'appel, le RDV, ce qui a bloqué. Sois précise — les mots exacts si tu t'en souviens.\n\nJe t'identifie les 2-3 erreurs clés et te donne UNE chose à corriger en priorité.",
-  prep:       "**MODE PRÉPARATION RDV activé** 🎯\n\nDonne-moi le contexte :\n- Qui tu vas voir et son contexte\n- Ce que tu vends\n- Objectif du RDV\n- Ce que tu sais déjà sur leurs enjeux\n\nJe te construis le plan de bataille.",
+  roleplay:   "**MODE ROLEPLAY activé** 🎭\n\nDonne-moi le contexte :\n- Profil de l'élu (secrétaire, trésorier, président ?)\n- Taille de l'entreprise\n- Où tu en es (premier contact ? relance ? RDV ?)\n- Ce que tu lui proposes\n\nJe joue l'élu. Je ne cède pas facilement.",
+  coldcall:   "**MODE COLD CALL activé** 📞\n\nOn travaille sur quoi :\n- Préparer un script d'appel\n- Améliorer ton accroche\n- Traiter les objections au téléphone\n- Passer le barrage secrétaire\n\nDécris ta situation.",
+  prep:       "**MODE PRÉPARATION RDV activé** 🎯\n\nDonne-moi :\n- Qui tu vas voir (poste, contexte CSE)\n- Ce que tu leur proposes\n- Ce que tu sais déjà sur leur situation\n- Ton objectif pour ce RDV\n\nJe te construis le plan de bataille.",
   methode:    "**MODE QUESTION MÉTHODE activé** 📋\n\nQuelle est ta question ? Objections, prospection, structure de RDV, formulation exacte...\n\nRéponse directe, script si besoin.",
-  objections: "**MODE OBJECTIONS & NÉGOCIATION activé** ⚡\n\nQuelle objection ou situation de blocage tu rencontres ? Donne-moi le contexte exact.\n\nJe te donne le script mot pour mot — méthode CIRQUE ou FBI selon le cas.",
-  rdv:        "**MODE CONDUITE DE RDV activé** 🗓️\n\nOn travaille sur quoi :\n- Le cadrage d'ouverture\n- La phase découverte\n- La gestion des objections en RDV\n- Le closing\n\nDécris ta situation.",
+  objections: "**MODE OBJECTIONS & NÉGOCIATION activé** ⚡\n\nQuelle objection ou situation de blocage tu rencontres ? Donne-moi le contexte exact.\n\nJe te donne le script mot pour mot.",
+  mails:      "**MODE RÉDACTION DE MAILS activé** ✉️\n\nQuel mail tu veux rédiger :\n- Prospection cold\n- Suivi après un call\n- Relance après RDV\n- Breakup email\n- Autre ?\n\nDonne-moi le contexte et je rédige.",
   free:       "**Sarah Sales 2.0 à ton écoute** 💬\n\nPose ta question, décris ta situation, raconte ce qui bloque. Je suis là.",
 };
- 
-// State
+
 let apiKey = localStorage.getItem('ss2_apikey') || '';
-let messages = [];
-let loading = false;
-let pendingFile = null;
-let recognition = null;
-let isRecording = false;
-let activeMode = null;
- 
-// DOM
+let messages = [], loading = false, pendingFile = null;
+let recognition = null, isRecording = false, activeMode = null;
+
 const $ = id => document.getElementById(id);
 const modalOverlay  = $('modal-overlay');
 const apiInput      = $('api-input');
@@ -355,16 +393,13 @@ const inputBox      = $('input-box');
 const pendingBar    = $('pending-bar');
 const pendingName   = $('pending-name');
 const pendingIcon   = $('pending-icon');
- 
-// Init
+const scrollBtn     = $('scroll-btn');
+
 function init() {
   buildModeGrid();
-  if (!apiKey) {
-    modalOverlay.style.display = 'flex';
-  }
+  if (!apiKey) modalOverlay.style.display = 'flex';
 }
- 
-// Modal
+
 apiInput.addEventListener('input', () => {
   apiSaveBtn.disabled = !apiInput.value.trim().startsWith('sk-');
 });
@@ -373,54 +408,43 @@ apiInput.addEventListener('keydown', e => {
 });
 apiSaveBtn.addEventListener('click', saveKey);
 function saveKey() {
-  apiKey = apiInput.value.replace(/\s/g, '').replace(/[^\x20-\x7E]/g, '').trim();
+  apiKey = apiInput.value.replace(/\s/g,'').trim();
   localStorage.setItem('ss2_apikey', apiKey);
   modalOverlay.style.display = 'none';
 }
- 
 $('edit-key-btn').addEventListener('click', () => {
   apiInput.value = apiKey;
   apiSaveBtn.disabled = !apiKey.startsWith('sk-');
   modalOverlay.style.display = 'flex';
 });
- 
-// Navigation
+
 function goHome() {
   homeScreen.style.display = 'block';
   chatScreen.style.display = 'none';
 }
+
 function saveHistory() {
   if (!activeMode) return;
-  try {
-    localStorage.setItem('ss2_history_' + activeMode.id, JSON.stringify(messages));
-    localStorage.setItem('ss2_last_mode', JSON.stringify(activeMode));
-  } catch(e) {}
+  try { localStorage.setItem('ss2_history_' + activeMode.id, JSON.stringify(messages)); } catch(e) {}
 }
- 
-function loadModeHistory(mode) {
-  try {
-    const saved = localStorage.getItem('ss2_history_' + mode.id);
-    if (saved) {
-      const msgs = JSON.parse(saved);
-      if (msgs.length > 1) return msgs;
-    }
-  } catch(e) {}
-  return null;
-}
- 
+
 function goChat(mode) {
   activeMode = mode;
   $('chat-mode-icon').textContent  = mode.icon;
   $('chat-mode-label').textContent = mode.label;
-  const saved = loadModeHistory(mode);
-  messages = saved || [{ role:'assistant', content: MODE_PROMPTS[mode.id] }];
-  saveHistory();
+  try {
+    const saved = localStorage.getItem('ss2_history_' + mode.id);
+    const msgs = saved ? JSON.parse(saved) : null;
+    messages = (msgs && msgs.length > 1) ? msgs : [{ role:'assistant', content: MODE_PROMPTS[mode.id] }];
+  } catch(e) {
+    messages = [{ role:'assistant', content: MODE_PROMPTS[mode.id] }];
+  }
   renderMessages();
   homeScreen.style.display = 'none';
   chatScreen.style.display = 'flex';
   msgInput.focus();
 }
- 
+
 $('back-btn').addEventListener('click', goHome);
 $('reset-btn').addEventListener('click', () => {
   if (!activeMode) return;
@@ -429,8 +453,7 @@ $('reset-btn').addEventListener('click', () => {
   renderMessages();
 });
 $('free-card').addEventListener('click', () => goChat({ id:'free', icon:'💬', label:'Chat libre' }));
- 
-// Mode grid
+
 function buildModeGrid() {
   MODES.forEach(mode => {
     const card = document.createElement('div');
@@ -440,8 +463,7 @@ function buildModeGrid() {
     modeGrid.appendChild(card);
   });
 }
- 
-// Markdown
+
 function renderInline(t) {
   return t
     .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
@@ -467,8 +489,7 @@ function renderMarkdown(text) {
     return `<div>${renderInline(line)}</div>`;
   }).join('');
 }
- 
-// Render
+
 function renderMessages() {
   messagesInner.innerHTML = '';
   messages.forEach(m => addMsgToDOM(m, false));
@@ -478,38 +499,41 @@ function addMsgToDOM(msg, animate) {
   const row = document.createElement('div');
   row.className = 'msg-row ' + (msg.role === 'user' ? 'user' : 'bot');
   if (!animate) row.style.animation = 'none';
- 
+
   if (msg.role === 'assistant') {
     const av = document.createElement('div');
     av.className = 'avatar'; av.textContent = 'S';
     row.appendChild(av);
   }
- 
+
   const wrap = document.createElement('div');
   wrap.className = 'bubble-wrap' + (msg.role === 'user' ? ' user' : '');
- 
+
   if (msg.role === 'user' && msg.fileName) {
     const badge = document.createElement('div');
     badge.style.cssText = 'background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);border-radius:8px 8px 0 0;padding:6px 12px;display:flex;align-items:center;gap:6px;font-size:11.5px;color:rgba(255,255,255,0.45);';
     badge.innerHTML = (msg.fileName.match(/\.(png|jpg|jpeg|webp)$/i) ? '🖼️ ' : '📄 ') + msg.fileName;
     wrap.appendChild(badge);
   }
- 
+
   const bubble = document.createElement('div');
   bubble.className = 'bubble ' + (msg.role === 'user' ? 'user' : 'bot');
   if (msg.role === 'user' && msg.fileName) bubble.style.borderRadius = '0 0 4px 16px';
- 
-  if (msg.role === 'user') {
-    bubble.textContent = msg.content;
-  } else {
-    bubble.innerHTML = renderMarkdown(msg.content);
-  }
+  if (msg.role === 'user') { bubble.textContent = msg.content; }
+  else { bubble.innerHTML = renderMarkdown(msg.content); }
   wrap.appendChild(bubble);
   row.appendChild(wrap);
   messagesInner.appendChild(row);
 }
 function scrollBottom() { messagesEl.scrollTop = messagesEl.scrollHeight; }
- 
+
+// Scroll button
+messagesEl.addEventListener('scroll', () => {
+  const atBottom = messagesEl.scrollHeight - messagesEl.scrollTop - messagesEl.clientHeight < 100;
+  scrollBtn.style.display = atBottom ? 'none' : 'flex';
+});
+scrollBtn.addEventListener('click', scrollBottom);
+
 function showTyping() {
   const row = document.createElement('div');
   row.id = 'typing-row'; row.className = 'msg-row bot';
@@ -517,7 +541,7 @@ function showTyping() {
   messagesInner.appendChild(row); scrollBottom();
 }
 function hideTyping() { const t = $('typing-row'); if (t) t.remove(); }
- 
+
 function showError(msg) {
   clearError();
   const div = document.createElement('div');
@@ -525,34 +549,32 @@ function showError(msg) {
   messagesInner.appendChild(div); scrollBottom();
 }
 function clearError() { const e = $('error-bar'); if (e) e.remove(); }
- 
-// Send
+
 async function send() {
   const text = msgInput.value.trim();
   if (!text && !pendingFile) return;
   if (loading) return;
   clearError();
- 
+
   const file = pendingFile;
   msgInput.value = ''; msgInput.style.height = 'auto';
   clearPending(); updateSend();
- 
+
   let content = text, fileName = null, imageData = null;
   if (file) {
     fileName = file.name;
     if (file.type === 'image') imageData = { mediaType: file.mediaType, data: file.data };
     else content = (text ? text + '\n\n' : 'Analyse ce contenu :\n\n') + file.content;
   }
- 
+
   const userMsg = { role:'user', content, fileName };
   messages.push(userMsg);
   addMsgToDOM(userMsg, true);
   showTyping();
   loading = true; updateSend();
- 
+
   try {
-    // Limite aux 10 derniers messages pour éviter les rate limits
-    const recentMessages = messages.slice(-30);
+    const recentMessages = messages.slice(-20);
     const apiMsgs = recentMessages.map((m, i) => {
       if (m.role === 'user' && imageData && i === recentMessages.length - 1) {
         return { role:'user', content:[
@@ -562,7 +584,7 @@ async function send() {
       }
       return { role: m.role, content: m.content };
     });
- 
+
     const res = await fetch('https://api.anthropic.com/v1/messages', {
       method: 'POST',
       headers: {
@@ -588,10 +610,10 @@ async function send() {
     loading = false; updateSend();
   }
 }
- 
+
 msgInput.addEventListener('input', () => {
   msgInput.style.height = 'auto';
-  msgInput.style.height = Math.min(msgInput.scrollHeight, 120) + 'px';
+  msgInput.style.height = Math.min(msgInput.scrollHeight, 150) + 'px';
   updateSend();
 });
 msgInput.addEventListener('keydown', e => {
@@ -599,8 +621,7 @@ msgInput.addEventListener('keydown', e => {
 });
 sendBtn.addEventListener('click', send);
 function updateSend() { sendBtn.disabled = (!msgInput.value.trim() && !pendingFile) || loading; }
- 
-// File
+
 $('attach-btn').addEventListener('click', () => $('file-input').click());
 $('file-input').addEventListener('change', e => {
   const f = e.target.files[0]; if (!f) return;
@@ -624,8 +645,7 @@ function setPending(f) {
 }
 function clearPending() { pendingFile = null; pendingBar.style.display = 'none'; updateSend(); }
 $('remove-file').addEventListener('click', clearPending);
- 
-// Voice
+
 $('mic-btn').addEventListener('click', () => {
   const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
   if (!SR) { showError('Reconnaissance vocale non supportée.'); return; }
@@ -643,8 +663,7 @@ function setRec(on) {
   inputBox.classList.toggle('recording', on);
   msgInput.placeholder = on ? '🎙️ Écoute en cours...' : 'Écris ou dicte ton message...';
 }
- 
-// Load history on startup
+
 function restoreLastSession() {
   try {
     const lastMode = localStorage.getItem('ss2_last_mode');
